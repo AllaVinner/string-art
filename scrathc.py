@@ -113,7 +113,7 @@ a = set()
 v = np.array([1,2,3])
 
 
-def pixel_neighbours(p):
+def pixel_neighbours_4(p):
     return [
         p + np.array([1,0]),
         p + np.array([-1,0]),
@@ -121,18 +121,30 @@ def pixel_neighbours(p):
         p + np.array([0,-1])
     ]
 
+def pixel_neighbours(p):
+    return [
+        p + np.array([1,0]),
+        p + np.array([-1,0]),
+        p + np.array([0,1]),
+        p + np.array([0,-1]),
+        p + np.array([1,1]),
+        p + np.array([-1,1]),
+        p + np.array([-1,-1]),
+        p + np.array([1,-1])
+    ]
+
 
 def is_in_ribon(p, p1, p2, r):
     v = p2 - p1
-    w = p-(p1+ np.inner(p-p1, v)/np.inner(v,v)*v)
+    w = p-p1- np.inner(p-p1, v)/np.inner(v,v)*v
     return np.inner(w,w) < r**2
 
 
 height = 10
-width = 4
+width = 10
 image = np.zeros((height, width), dtype=float)
 center = np.array([height//2, width//2])
-image_radius = max(height//2, width//2)
+image_radius = min(height//2, width//2)
 
 def get_line_pixels(p1, p2, r):
     pixels_to_visit = [p1]
@@ -148,25 +160,37 @@ def get_line_pixels(p1, p2, r):
             if not is_in_ribon(pn, p1, p2, r=r):
                 print(pn, ' was outside the ribon')
                 continue
-            return pn, pixels
-            if pn in pixels:
+            if any([(pn == vp).all() for vp in pixels]):
                 print(pn, ' was already in pixels')
                 continue
             pixels_to_visit.append(pn)
     return pixels
 
-get_line_pixels(np.array([1,0]), np.array([3,9]), r =2.)
+
+p1 = np.array([3,3])
+p2 = np.array([5,5])
+
+pixels = get_line_pixels(p1, p2, r =0.5)
+pixels
+image = np.zeros((height, width), dtype=float)
+for p in pixels:
+    image[p[0], p[1]] = 1.
+image
+
+pixels
+a
+b
+
+a in [c for c in b]
 
 
+q = np.array([1,2,3])
+l = list(np.array([1,2]))
+q in l
+
+all([(aa == a).all() for aa in b])
 
 
-
-
-
-
-
-
-    
 
 
 

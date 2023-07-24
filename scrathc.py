@@ -146,25 +146,6 @@ image = np.zeros((height, width), dtype=float)
 center = np.array([height//2, width//2])
 image_radius = min(height//2, width//2)
 
-def get_line_pixels(p1, p2, r):
-    pixels_to_visit = [p1]
-    pixels = []
-    while len(pixels_to_visit) > 0:
-        p = pixels_to_visit.pop()
-        print('currently checking out ', p)
-        pixels.append(p)
-        for pn in pixel_neighbours(p):
-            if np.inner(pn-center, pn-center) > image_radius**2:
-                print(pn, ' was outside the circle')
-                continue
-            if not is_in_ribon(pn, p1, p2, r=r):
-                print(pn, ' was outside the ribon')
-                continue
-            if any([(pn == vp).all() for vp in pixels]):
-                print(pn, ' was already in pixels')
-                continue
-            pixels_to_visit.append(pn)
-    return pixels
 
 
 p1 = np.array([3,3])

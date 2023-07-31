@@ -61,5 +61,18 @@ def get_line_pixels(p1, p2, r, height, width):
     return pixels
 
 
+width = 30
+height = 34
+canvas = np.zeros((height, width), dtype=int)
 
-get_line_pixels(p1, p2, 1., 7,5)
+p1 = np.array([0, 0])
+p2 = np.array([5, 7])
+
+pixels = get_line_pixels(p1, p2, 1., height, width)
+print(pixels)
+
+for pix in pixels:
+    canvas[pix[0], pix[1]] = 1
+    
+canvas
+
